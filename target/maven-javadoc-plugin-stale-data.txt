@@ -1,0 +1,51 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--no-fonts
+-classpath
+'/home/evandro/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE290/AbsoluteLayout-RELEASE290.jar:/home/evandro/.m2/repository/com/formdev/flatlaf/3.4/flatlaf-3.4.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+25
+-sourcepath
+'/home/evandro/projects/iterum/src/main/java:/home/evandro/projects/iterum/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/evandro/projects/iterum/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'iterum 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'iterum 1.0-SNAPSHOT API'
+iterum
+iterum.view
+iterum.view.componentes
+/home/evandro/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE290/AbsoluteLayout-RELEASE290.jar = 1771518771000
+/home/evandro/.m2/repository/com/formdev/flatlaf/3.4/flatlaf-3.4.jar = 1708382050000
+/home/evandro/projects/iterum/src/main/java = 1772731545878
+/home/evandro/projects/iterum/target/generated-sources/annotations = 1773605824456
+/home/evandro/projects/iterum/target/reports/apidocs/tag-search-index.js = 1773605848169
+/home/evandro/projects/iterum/target/reports/apidocs/search.html = 1773605848176
+/home/evandro/projects/iterum/target/reports/apidocs/help-doc.html = 1773605848180
+/home/evandro/projects/iterum/target/reports/apidocs/type-search-index.js = 1773605848168
+/home/evandro/projects/iterum/target/reports/apidocs/overview-tree.html = 1773605848149
+/home/evandro/projects/iterum/target/reports/apidocs/allpackages-index.html = 1773605848166
+/home/evandro/projects/iterum/target/reports/apidocs/allclasses-index.html = 1773605848165
+/home/evandro/projects/iterum/target/reports/apidocs/package-search-index.js = 1773605848168
+/home/evandro/projects/iterum/target/reports/apidocs/overview-summary.html = 1773605848178
+/home/evandro/projects/iterum/target/reports/apidocs/index.html = 1773605848152
+/home/evandro/projects/iterum/target/reports/apidocs/element-list = 1773605848081
+/home/evandro/projects/iterum/target/reports/apidocs/index-all.html = 1773605848175
+/home/evandro/projects/iterum/target/reports/apidocs/serialized-form.html = 1773605848131
+/home/evandro/projects/iterum/target/reports/apidocs/member-search-index.js = 1773605848169
+/home/evandro/projects/iterum/target/reports/apidocs/module-search-index.js = 1773605848167

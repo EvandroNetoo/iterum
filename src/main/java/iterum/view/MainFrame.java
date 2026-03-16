@@ -79,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnlBarraLateral = new javax.swing.JPanel();
@@ -92,14 +92,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ITERUM");
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(1000, 800));
+        setPreferredSize(new java.awt.Dimension(1000, 800));
 
+        pnlBarraLateral.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         pnlBarraLateral.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 20, 10));
         pnlBarraLateral.setMinimumSize(new java.awt.Dimension(200, 0));
         pnlBarraLateral.setPreferredSize(new java.awt.Dimension(200, 0));
         pnlBarraLateral.setLayout(new java.awt.GridLayout(10, 1, 0, 10));
 
+        jLabel1.setFont(new java.awt.Font("Liberation Mono", 1, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ITERUM");
         pnlBarraLateral.add(jLabel1);
@@ -114,10 +116,11 @@ public class MainFrame extends javax.swing.JFrame {
         btnEquipe.setText("EQUIPE");
         pnlBarraLateral.add(btnEquipe);
 
-        btnRelatorios.setText("RELATÓRIOS´");
+        btnRelatorios.setText("RELATÓRIOS");
+        btnRelatorios.addActionListener(this::btnRelatoriosActionPerformed);
         pnlBarraLateral.add(btnRelatorios);
 
-        getContentPane().add(pnlBarraLateral, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(pnlBarraLateral, java.awt.BorderLayout.WEST);
 
         pnlConteudo.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlConteudo.setLayout(new java.awt.CardLayout());
@@ -125,6 +128,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnProjetosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnProjetosActionPerformed
         // TODO add your handling code here:

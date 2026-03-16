@@ -26,24 +26,21 @@ public class PnlLinkBarraLateral extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblLink = new javax.swing.JLabel();
+        btnLink = new javax.swing.JButton();
 
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         setMaximumSize(new java.awt.Dimension(180, 50));
         setMinimumSize(new java.awt.Dimension(180, 50));
         setPreferredSize(new java.awt.Dimension(180, 50));
         setLayout(new java.awt.BorderLayout());
 
-        lblLink.setFont(new java.awt.Font("Liberation Mono", 1, 24)); // NOI18N
-        lblLink.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLink.setText("LINK");
-        lblLink.setMaximumSize(new java.awt.Dimension(180, 50));
-        lblLink.setMinimumSize(new java.awt.Dimension(180, 50));
-        lblLink.setPreferredSize(new java.awt.Dimension(180, 50));
-        add(lblLink, java.awt.BorderLayout.CENTER);
+        btnLink.setFont(new java.awt.Font("Liberation Mono", 1, 24)); // NOI18N
+        btnLink.setText("LINK");
+        add(btnLink, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblLink;
+    private javax.swing.JButton btnLink;
     // End of variables declaration//GEN-END:variables
 }

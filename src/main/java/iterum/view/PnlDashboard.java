@@ -4,6 +4,7 @@
  */
 package iterum.view;
 
+import iterum.view.componentes.PnlCardDashboard;
 /**
  *
  * @author evandro
@@ -15,6 +16,12 @@ public class PnlDashboard extends javax.swing.JPanel {
      */
     public PnlDashboard() {
         initComponents();
+        
+        pnlCardsTopo.removeAll();
+        
+        pnlCardsTopo.add(new PnlCardDashboard("Projetos Ativos", "3"));
+        pnlCardsTopo.add(new PnlCardDashboard("Tarefas Pendentes", "8"));
+        pnlCardsTopo.add(new PnlCardDashboard("Tarefas Concluídas", "17"));
     }
 
     /**
@@ -29,16 +36,7 @@ public class PnlDashboard extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        pnlCardsTopo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
 
         jLabel1.setText("jLabel1");
@@ -71,55 +69,10 @@ public class PnlDashboard extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setMinimumSize(new java.awt.Dimension(600, 600));
-        setPreferredSize(new java.awt.Dimension(600, 600));
         setLayout(new java.awt.BorderLayout(10, 10));
 
-        jPanel4.setLayout(new java.awt.GridLayout(1, 3, 10, 0));
-
-        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        jPanel5.setLayout(new java.awt.BorderLayout());
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Projetos Ativos");
-        jPanel5.add(jLabel6, java.awt.BorderLayout.PAGE_START);
-
-        jLabel5.setFont(new java.awt.Font("Liberation Sans", 0, 48)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("5");
-        jPanel5.add(jLabel5, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(jPanel5);
-
-        jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        jPanel8.setLayout(new java.awt.BorderLayout());
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Tarefas Pendentes");
-        jPanel8.add(jLabel7, java.awt.BorderLayout.PAGE_START);
-
-        jLabel8.setFont(new java.awt.Font("Liberation Sans", 0, 48)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("5");
-        jPanel8.add(jLabel8, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(jPanel8);
-
-        jPanel9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        jPanel9.setLayout(new java.awt.BorderLayout());
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Tarefas Concluídas");
-        jPanel9.add(jLabel9, java.awt.BorderLayout.PAGE_START);
-
-        jLabel10.setFont(new java.awt.Font("Liberation Sans", 0, 48)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("5");
-        jPanel9.add(jLabel10, java.awt.BorderLayout.CENTER);
-
-        jPanel4.add(jPanel9);
-
-        add(jPanel4, java.awt.BorderLayout.NORTH);
+        pnlCardsTopo.setLayout(new java.awt.GridLayout(1, 3, 10, 0));
+        add(pnlCardsTopo, java.awt.BorderLayout.NORTH);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,7 +82,7 @@ public class PnlDashboard extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
+            .addGap(0, 204, Short.MAX_VALUE)
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -138,18 +91,9 @@ public class PnlDashboard extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel pnlCardsTopo;
     // End of variables declaration//GEN-END:variables
 }

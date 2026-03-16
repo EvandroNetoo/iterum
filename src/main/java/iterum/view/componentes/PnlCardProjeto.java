@@ -27,7 +27,7 @@ public class PnlCardProjeto extends javax.swing.JPanel {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 formMouseExited(evt);
             }
-            
+
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -54,7 +54,8 @@ public class PnlCardProjeto extends javax.swing.JPanel {
         lblPrazo = new javax.swing.JLabel();
         lblMembros = new javax.swing.JLabel();
 
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        setBorder(new javax.swing.border.LineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor"), 2, true));
         setMaximumSize(new java.awt.Dimension(250, 150));
         setMinimumSize(new java.awt.Dimension(250, 150));
         setPreferredSize(new java.awt.Dimension(250, 150));
@@ -71,6 +72,8 @@ public class PnlCardProjeto extends javax.swing.JPanel {
         });
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 
+        pnlTitulo.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        pnlTitulo.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         pnlTitulo.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTitulo.setFont(new java.awt.Font("Liberation Sans", 1, 24)); // NOI18N
@@ -86,6 +89,7 @@ public class PnlCardProjeto extends javax.swing.JPanel {
         pbProgresso.setStringPainted(true);
         add(pbProgresso);
 
+        pnlDetalhes.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         pnlDetalhes.setLayout(new java.awt.GridLayout(3, 0));
 
         lblTarefas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -104,12 +108,22 @@ public class PnlCardProjeto extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 120, 215), 2, true));
+        setBorder(new com.formdev.flatlaf.ui.FlatLineBorder(
+                new java.awt.Insets(2, 2, 2, 2),
+                javax.swing.UIManager.getColor("Button.focusedBorderColor"),
+                2f,
+                15
+        ));
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }//GEN-LAST:event_formMouseEntered
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        setBorder(new com.formdev.flatlaf.ui.FlatLineBorder(
+                new java.awt.Insets(2, 2, 2, 2),
+                javax.swing.UIManager.getColor("Button.borderColor"),
+                2f,
+                2
+        ));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_formMouseExited
 

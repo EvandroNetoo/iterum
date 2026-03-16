@@ -50,8 +50,6 @@ public class PnlProjetos extends javax.swing.JPanel {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("PROJETOS");
         add(lblTitulo, java.awt.BorderLayout.NORTH);
-
-        pnlListaProjetos.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
         add(pnlListaProjetos, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 

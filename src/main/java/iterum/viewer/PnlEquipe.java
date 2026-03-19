@@ -2,34 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package iterum.view;
-
-import iterum.view.componentes.PnlCardProjeto;
+package iterum.viewer;
 
 /**
  *
  * @author evandro
  */
-public class PnlProjetos extends javax.swing.JPanel {
+public class PnlEquipe extends javax.swing.JPanel {
 
     /**
-     * Creates new form pnlProjetos
+     * Creates new form PnlEquipe
      */
-    public PnlProjetos() {
+    public PnlEquipe() {
         initComponents();
-        
-        atualizarListagem();
-    }
-
-    public void atualizarListagem() {
-        pnlListaProjetos.removeAll();
-        
-        for (int i = 0; i < 7; i++) {
-            pnlListaProjetos.add(new PnlCardProjeto());
-        }
-
-        pnlListaProjetos.revalidate();
-        pnlListaProjetos.repaint();
     }
 
     /**
@@ -47,7 +32,6 @@ public class PnlProjetos extends javax.swing.JPanel {
         lblTitulo = new javax.swing.JLabel();
         pnlDireita = new javax.swing.JPanel();
         btnAdicionar = new javax.swing.JButton();
-        pnlListaProjetos = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -58,7 +42,7 @@ public class PnlProjetos extends javax.swing.JPanel {
 
         lblTitulo.setFont(new java.awt.Font("Liberation Sans", 1, 48)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("PROJETOS");
+        lblTitulo.setText("EQUIPE");
         pnlCentro.add(lblTitulo);
 
         pnlTopo.add(pnlCentro);
@@ -72,9 +56,6 @@ public class PnlProjetos extends javax.swing.JPanel {
         pnlTopo.add(pnlDireita);
 
         add(pnlTopo, java.awt.BorderLayout.NORTH);
-
-        pnlListaProjetos.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
-        add(pnlListaProjetos, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -84,7 +65,6 @@ public class PnlProjetos extends javax.swing.JPanel {
     private javax.swing.JPanel pnlCentro;
     private javax.swing.JPanel pnlDireita;
     private javax.swing.JPanel pnlEsquerda;
-    private javax.swing.JPanel pnlListaProjetos;
     private javax.swing.JPanel pnlTopo;
     // End of variables declaration//GEN-END:variables
 }

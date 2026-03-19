@@ -2,11 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package iterum.view;
+package iterum.viewer;
 
-import iterum.view.componentes.PnlLinkBarraLateral;
+import iterum.controller.GerenciadorInterfaceGrafica;
+import iterum.viewer.componentes.PnlLinkBarraLateral;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+
+import iterum.controller.Tela;
+
 
 /**
  *
@@ -14,28 +18,6 @@ import javax.swing.JPanel;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private enum Tela {
-        DASHBOARD("dashboard", () -> new PnlDashboard()),
-        PROJETOS("projetos", () -> new PnlProjetos()),
-        EQUIPE("equipe", () -> new PnlEquipe()),
-        RELATORIOS("relatorios", () -> new PnlRelatorios());
-
-        private final String nome;
-        private final java.util.function.Supplier<JPanel> lambdaPanel;
-
-        private Tela(String nome, java.util.function.Supplier<JPanel> lambdaPanel) {
-            this.nome = nome;
-            this.lambdaPanel = lambdaPanel;
-        }
-
-        public JPanel getPanel() {
-            return lambdaPanel.get();
-        }
-
-        public String getNome() {
-            return nome;
-        }
-    }
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger
             .getLogger(MainFrame.class.getName());
@@ -48,28 +30,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
 
-        btnDashboard.addActionListener(e -> irParaTela(Tela.DASHBOARD));
-        btnProjetos.addActionListener(e -> irParaTela(Tela.PROJETOS));
-
-        pnlBarraLateral.add(new PnlLinkBarraLateral());
-
-        irParaTela(Tela.DASHBOARD);
+        for(Tela tela : Tela.values()) {
+            pnlBarraLateral.add(new PnlLinkBarraLateral(tela));
+        }
     }
-
-    private void irParaTela(Tela tela) {
-        // 1. Removemos tudo o que está no container agora para liberar memória
-        pnlConteudo.removeAll();
-
-        // 2. Criamos uma instância "zerada"
-        JPanel novaTela = tela.getPanel();
-
-        // 3. Adicionamos e mostramos
-        pnlConteudo.add(novaTela, tela.getNome());
-        pnlConteudo.revalidate();
-        pnlConteudo.repaint();
-
-        CardLayout card = (CardLayout) pnlConteudo.getLayout();
-        card.show(pnlConteudo, tela.getNome());
+    
+    public JPanel getPnlConteudo() {
+        return pnlConteudo;
     }
 
     /**
@@ -84,10 +51,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlBarraLateral = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnDashboard = new javax.swing.JButton();
-        btnProjetos = new javax.swing.JButton();
-        btnEquipe = new javax.swing.JButton();
-        btnRelatorios = new javax.swing.JButton();
         pnlConteudo = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,20 +69,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText("ITERUM");
         pnlBarraLateral.add(jLabel1);
 
-        btnDashboard.setText("DASHBOARD");
-        pnlBarraLateral.add(btnDashboard);
-
-        btnProjetos.setText("PROJETOS");
-        btnProjetos.addActionListener(this::btnProjetosActionPerformed);
-        pnlBarraLateral.add(btnProjetos);
-
-        btnEquipe.setText("EQUIPE");
-        pnlBarraLateral.add(btnEquipe);
-
-        btnRelatorios.setText("RELATÓRIOS");
-        btnRelatorios.addActionListener(this::btnRelatoriosActionPerformed);
-        pnlBarraLateral.add(btnRelatorios);
-
         getContentPane().add(pnlBarraLateral, java.awt.BorderLayout.WEST);
 
         pnlConteudo.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -128,10 +77,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnProjetosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnProjetosActionPerformed
         // TODO add your handling code here:
@@ -157,10 +102,6 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDashboard;
-    private javax.swing.JButton btnEquipe;
-    private javax.swing.JButton btnProjetos;
-    private javax.swing.JButton btnRelatorios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel pnlBarraLateral;
     private javax.swing.JPanel pnlConteudo;

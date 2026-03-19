@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package iterum.view.componentes;
+package iterum.viewer.componentes;
 
 /**
  *
@@ -56,9 +56,9 @@ public class PnlCardProjeto extends javax.swing.JPanel {
 
         setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         setBorder(new javax.swing.border.LineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor"), 2, true));
-        setMaximumSize(new java.awt.Dimension(250, 150));
-        setMinimumSize(new java.awt.Dimension(250, 150));
-        setPreferredSize(new java.awt.Dimension(250, 150));
+        setMaximumSize(new java.awt.Dimension(230, 150));
+        setMinimumSize(new java.awt.Dimension(230, 150));
+        setPreferredSize(new java.awt.Dimension(230, 150));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);

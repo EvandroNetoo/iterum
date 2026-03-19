@@ -68,32 +68,6 @@
             <Property name="text" type="java.lang.String" value="ITERUM"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDashboard">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="DASHBOARD"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnProjetos">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="PROJETOS"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProjetosActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnEquipe">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="EQUIPE"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnRelatorios">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="RELAT&#xd3;RIOS"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRelatoriosActionPerformed"/>
-          </Events>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pnlConteudo">

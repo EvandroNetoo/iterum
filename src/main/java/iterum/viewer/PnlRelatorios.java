@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package iterum.view;
+package iterum.viewer;
 
 /**
  *
  * @author evandro
  */
-public class PnlEquipe extends javax.swing.JPanel {
+public class PnlRelatorios extends javax.swing.JPanel {
 
     /**
-     * Creates new form PnlEquipe
+     * Creates new form PnlRelatorios
      */
-    public PnlEquipe() {
+    public PnlRelatorios() {
         initComponents();
     }
 
@@ -27,44 +27,25 @@ public class PnlEquipe extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlTopo = new javax.swing.JPanel();
-        pnlEsquerda = new javax.swing.JPanel();
         pnlCentro = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        pnlDireita = new javax.swing.JPanel();
-        btnAdicionar = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
-        pnlTopo.setLayout(new java.awt.GridLayout(1, 3));
-
-        pnlEsquerda.setLayout(new java.awt.BorderLayout());
-        pnlTopo.add(pnlEsquerda);
-
         lblTitulo.setFont(new java.awt.Font("Liberation Sans", 1, 48)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("EQUIPE");
+        lblTitulo.setText("RELATÓRIOS");
         pnlCentro.add(lblTitulo);
 
         pnlTopo.add(pnlCentro);
-
-        pnlDireita.setLayout(new java.awt.BorderLayout());
-
-        btnAdicionar.setText("ADICIONAR");
-        btnAdicionar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pnlDireita.add(btnAdicionar, java.awt.BorderLayout.LINE_END);
-
-        pnlTopo.add(pnlDireita);
 
         add(pnlTopo, java.awt.BorderLayout.NORTH);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdicionar;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlCentro;
-    private javax.swing.JPanel pnlDireita;
-    private javax.swing.JPanel pnlEsquerda;
     private javax.swing.JPanel pnlTopo;
     // End of variables declaration//GEN-END:variables
 }

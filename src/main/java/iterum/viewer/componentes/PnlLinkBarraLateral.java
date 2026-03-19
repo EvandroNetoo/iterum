@@ -2,7 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package iterum.view.componentes;
+package iterum.viewer.componentes;
+
+import iterum.controller.GerenciadorInterfaceGrafica;
+import iterum.controller.Tela;
 
 /**
  *
@@ -10,11 +13,12 @@ package iterum.view.componentes;
  */
 public class PnlLinkBarraLateral extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnlLinkBarraLateral
-     */
-    public PnlLinkBarraLateral() {
+    private final Tela tela;
+    
+    public PnlLinkBarraLateral(Tela tela) {
         initComponents();
+        this.tela = tela;
+        btnLink.setText(tela.getLabel());
     }
 
     /**
@@ -36,8 +40,13 @@ public class PnlLinkBarraLateral extends javax.swing.JPanel {
 
         btnLink.setFont(new java.awt.Font("Liberation Mono", 1, 24)); // NOI18N
         btnLink.setText("LINK");
+        btnLink.addActionListener(this::btnLinkActionPerformed);
         add(btnLink, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLinkActionPerformed
+        GerenciadorInterfaceGrafica.instancia.abrirTela(tela);
+    }//GEN-LAST:event_btnLinkActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,17 +6,16 @@ package iterum.controller;
 
 import iterum.viewer.PnlDashboard;
 import iterum.viewer.PnlEquipe;
+import iterum.viewer.PnlProjeto;
 import iterum.viewer.PnlProjetos;
 import iterum.viewer.PnlRelatorios;
 import javax.swing.JPanel;
 
-/**
- *
- * @author 2024122760105
- */
+
 public enum Tela {
     DASHBOARD("dashboard", "DASHBOARD", () -> new PnlDashboard()),
     PROJETOS("projetos", "PROJETOS", () -> new PnlProjetos()),
+    PROJETO("projeto", "PROJETO", () -> new PnlProjeto()),
     EQUIPE("equipe", "EQUIPE", () -> new PnlEquipe()),
     RELATORIOS("relatorios", "RELATÓRIOS", () -> new PnlRelatorios());
 

@@ -5,6 +5,7 @@
 package iterum.domain;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +22,11 @@ public class Projeto {
     public Projeto(int id, String nome) {
         this.id = id;
         this.nome = nome;
-        this.etapas = Arrays.asList(
-                new EtapaProjeto(1, "BACKLOCK", "#ffffff", false),
-                new EtapaProjeto(2, "BACKLOCK", "#999999", false),
-                new EtapaProjeto(3, "BACKLOCK", "#333333", true)
-        );
+        this.etapas = new ArrayList<>(Arrays.asList(
+                new EtapaProjeto(1, "BACKLOG", "#8E8E93", false),
+                new EtapaProjeto(2, "EM ANDAMENTO", "#0A84FF", false),
+                new EtapaProjeto(3, "REVISAO", "#FF9F0A", false),
+                new EtapaProjeto(4, "CONCLUIDO", "#30D158", true)));
     }
 
     public Projeto(String nome) {
@@ -46,6 +47,14 @@ public class Projeto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<EtapaProjeto> getEtapas() {
+        return etapas;
+    }
+
+    public void setEtapas(List<EtapaProjeto> etapas) {
+        this.etapas = etapas;
     }
 
 }

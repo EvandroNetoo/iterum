@@ -14,3 +14,6 @@
 /home/evandro/projects/iterum/src/main/java/iterum/viewer/componentes/PnlCardDashboard.java
 /home/evandro/projects/iterum/src/main/java/iterum/viewer/componentes/PnlCardProjeto.java
 /home/evandro/projects/iterum/src/main/java/iterum/viewer/componentes/PnlLinkBarraLateral.java
+/home/evandro/projects/iterum/src/main/java/iterum/viewer/dialog/DlgContribuidorCadastro.java
+/home/evandro/projects/iterum/src/main/java/iterum/viewer/dialog/DlgProjetoCadastro.java
+/home/evandro/projects/iterum/src/main/java/iterum/viewer/dialog/DlgTarefaCadastro.java

@@ -5,6 +5,7 @@
 package iterum.domain;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,12 +14,12 @@ import java.util.List;
  */
 public class EtapaProjeto {
 
-    int id;
-    boolean etapaDeConclucao;
-    String nome;
-    String hexColor;
+    private int id;
+    private boolean etapaDeConclucao;
+    private String nome;
+    private String hexColor;
 
-    List<Tarefa> tarefas;
+    private List<Tarefa> tarefas;
 
     public EtapaProjeto(int id, String nome, String hexColor, boolean etapaDeConclucao) {
         this.id = id;
@@ -26,10 +27,9 @@ public class EtapaProjeto {
         this.hexColor = hexColor;
         this.etapaDeConclucao = etapaDeConclucao;
 
-        this.tarefas = Arrays.asList(
+        this.tarefas = new ArrayList<>(Arrays.asList(
                 new Tarefa(1, "Fazer o front"),
-                new Tarefa(2, "Fazer o back")
-        );
+                new Tarefa(2, "Fazer o back")));
     }
 
     public EtapaProjeto(String nome, String hexColor, boolean etapaDeConclucao) {
@@ -66,6 +66,14 @@ public class EtapaProjeto {
 
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
+    }
+
+    public boolean isEtapaDeConclucao() {
+        return etapaDeConclucao;
+    }
+
+    public void setEtapaDeConclucao(boolean etapaDeConclucao) {
+        this.etapaDeConclucao = etapaDeConclucao;
     }
 
 }

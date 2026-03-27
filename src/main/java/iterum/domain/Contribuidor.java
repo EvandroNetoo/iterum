@@ -9,16 +9,26 @@ package iterum.domain;
  * @author evandro
  */
 public class Contribuidor {
-    int id;
-    String nome;
+    private int id;
+    private String nome;
+    private String email;
 
     public Contribuidor(int id, String nome) {
+        this(id, nome, "");
+    }
+
+    public Contribuidor(int id, String nome, String email) {
         this.id = id;
         this.nome = nome;
+        this.email = email;
     }
 
     public Contribuidor(String nome) {
-        this.nome = nome;
+        this(0, nome, "");
+    }
+
+    public Contribuidor(String nome, String email) {
+        this(0, nome, email);
     }
 
     public int getId() {
@@ -36,5 +46,13 @@ public class Contribuidor {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

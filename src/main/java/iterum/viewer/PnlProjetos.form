@@ -53,7 +53,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnAdicionar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="ADICIONAR"/>
+                <Property name="text" type="java.lang.String" value="NOVO PROJETO"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Constraints>
@@ -67,6 +67,13 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pnlListaProjetos">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder bottom="12" left="12" right="12" top="12"/>
+          </Border>
+        </Property>
+      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
           <BorderConstraints direction="Center"/>

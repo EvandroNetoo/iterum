@@ -5,6 +5,7 @@
 package iterum.domain;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,17 +15,16 @@ import java.util.List;
 public class Tarefa {
     private int id;
     private String nome;
-    
+
     private List<Contribuidor> contribuidores;
 
     public Tarefa(int id, String nome) {
-        this.id = id;        
+        this.id = id;
         this.nome = nome;
-        
-        contribuidores = Arrays.asList(
+
+        contribuidores = new ArrayList<>(Arrays.asList(
                 new Contribuidor(1, "Evandro Neto"),
-                new Contribuidor(2, "Gabriel Rocha")
-        );
+                new Contribuidor(2, "Gabriel Rocha")));
     }
 
     public Tarefa(String nome) {
@@ -46,6 +46,13 @@ public class Tarefa {
     public void setNome(String nome) {
         this.nome = nome;
     }
-  
-    
+
+    public List<Contribuidor> getContribuidores() {
+        return contribuidores;
+    }
+
+    public void setContribuidores(List<Contribuidor> contribuidores) {
+        this.contribuidores = contribuidores;
+    }
+
 }

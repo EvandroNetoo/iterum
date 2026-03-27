@@ -42,6 +42,39 @@ public class PnlProjeto extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jPanel20 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel22 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
+        jPanel25 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel26 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        jPanel27 = new javax.swing.JPanel();
+        jPanel28 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel29 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -94,6 +127,9 @@ public class PnlProjeto extends javax.swing.JPanel {
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel7.setName(""); // NOI18N
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel1.setText("Task 1");
@@ -101,6 +137,7 @@ public class PnlProjeto extends javax.swing.JPanel {
 
         jPanel6.add(jPanel7);
 
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel3.setText("Task 1");
@@ -112,6 +149,180 @@ public class PnlProjeto extends javax.swing.JPanel {
 
         jPanel1.add(jPanel2);
 
+        jPanel9.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel9.setMinimumSize(new java.awt.Dimension(200, 100));
+        jPanel9.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jPanel10.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel10.setMinimumSize(new java.awt.Dimension(100, 70));
+        jPanel10.setOpaque(false);
+        jPanel10.setPreferredSize(new java.awt.Dimension(100, 70));
+        jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel11.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
+        jPanel11.setOpaque(false);
+
+        jLabel4.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("BACKLOG");
+        jPanel11.add(jLabel4);
+
+        jPanel10.add(jPanel11);
+
+        jPanel12.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel12.setOpaque(false);
+
+        jButton2.setText("Adicionar");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jPanel12.add(jButton2);
+
+        jPanel10.add(jPanel12);
+
+        jPanel9.add(jPanel10, java.awt.BorderLayout.NORTH);
+
+        jPanel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel13.setOpaque(false);
+        jPanel13.setLayout(new javax.swing.BoxLayout(jPanel13, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel14.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel14.setName(""); // NOI18N
+        jPanel14.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel5.setText("Task 1");
+        jPanel14.add(jLabel5);
+
+        jPanel13.add(jPanel14);
+
+        jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel6.setText("Task 1");
+        jPanel15.add(jLabel6);
+
+        jPanel13.add(jPanel15);
+
+        jPanel9.add(jPanel13, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel9);
+
+        jPanel16.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel16.setMinimumSize(new java.awt.Dimension(200, 100));
+        jPanel16.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanel16.setLayout(new java.awt.BorderLayout());
+
+        jPanel17.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel17.setMinimumSize(new java.awt.Dimension(100, 70));
+        jPanel17.setOpaque(false);
+        jPanel17.setPreferredSize(new java.awt.Dimension(100, 70));
+        jPanel17.setLayout(new javax.swing.BoxLayout(jPanel17, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel18.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
+        jPanel18.setOpaque(false);
+
+        jLabel7.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("BACKLOG");
+        jPanel18.add(jLabel7);
+
+        jPanel17.add(jPanel18);
+
+        jPanel19.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel19.setOpaque(false);
+
+        jButton3.setText("Adicionar");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel19.add(jButton3);
+
+        jPanel17.add(jPanel19);
+
+        jPanel16.add(jPanel17, java.awt.BorderLayout.NORTH);
+
+        jPanel20.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel20.setOpaque(false);
+        jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel21.setName(""); // NOI18N
+        jPanel21.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel8.setText("Task 1");
+        jPanel21.add(jLabel8);
+
+        jPanel20.add(jPanel21);
+
+        jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel22.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel9.setText("Task 1");
+        jPanel22.add(jLabel9);
+
+        jPanel20.add(jPanel22);
+
+        jPanel16.add(jPanel20, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel16);
+
+        jPanel23.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel23.setMinimumSize(new java.awt.Dimension(200, 100));
+        jPanel23.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanel23.setLayout(new java.awt.BorderLayout());
+
+        jPanel24.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel24.setMinimumSize(new java.awt.Dimension(100, 70));
+        jPanel24.setOpaque(false);
+        jPanel24.setPreferredSize(new java.awt.Dimension(100, 70));
+        jPanel24.setLayout(new javax.swing.BoxLayout(jPanel24, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel25.setBackground(javax.swing.UIManager.getDefaults().getColor("Actions.Red"));
+        jPanel25.setOpaque(false);
+
+        jLabel10.setFont(new java.awt.Font("Liberation Sans", 1, 18)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("BACKLOG");
+        jPanel25.add(jLabel10);
+
+        jPanel24.add(jPanel25);
+
+        jPanel26.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+        jPanel26.setOpaque(false);
+
+        jButton4.setText("Adicionar");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jPanel26.add(jButton4);
+
+        jPanel24.add(jPanel26);
+
+        jPanel23.add(jPanel24, java.awt.BorderLayout.NORTH);
+
+        jPanel27.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel27.setOpaque(false);
+        jPanel27.setLayout(new javax.swing.BoxLayout(jPanel27, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel28.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel28.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel28.setName(""); // NOI18N
+        jPanel28.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel11.setText("Task 1");
+        jPanel28.add(jLabel11);
+
+        jPanel27.add(jPanel28);
+
+        jPanel29.setBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.default.borderColor")));
+        jPanel29.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel12.setText("Task 1");
+        jPanel29.add(jLabel12);
+
+        jPanel27.add(jPanel29);
+
+        jPanel23.add(jPanel27, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel23);
+
         jScrollPane1.setViewportView(jPanel1);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -121,20 +332,65 @@ public class PnlProjeto extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlCentro;

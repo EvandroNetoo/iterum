@@ -14,8 +14,10 @@ import javax.swing.JPanel;
 
 public enum Tela {
     DASHBOARD("dashboard", "DASHBOARD", () -> new PnlDashboard()),
+    
     PROJETOS("projetos", "PROJETOS", () -> new PnlProjetos()),
-    PROJETO("projeto", "PROJETO", () -> new PnlProjeto()),
+    PROJETO("projeto", "", () -> new PnlProjeto()),
+    
     EQUIPE("equipe", "EQUIPE", () -> new PnlEquipe()),
     RELATORIOS("relatorios", "RELATÓRIOS", () -> new PnlRelatorios());
 

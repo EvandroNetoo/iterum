@@ -11,30 +11,31 @@ import javax.swing.JPanel;
 
 import iterum.controller.Tela;
 
-
 /**
  *
  * @author evandro
  */
-public class MainFrame extends javax.swing.JFrame {
-
+public class FrmPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger
-            .getLogger(MainFrame.class.getName());
+            .getLogger(FrmPrincipal.class.getName());
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public FrmPrincipal() {
         initComponents();
 
         this.setLocationRelativeTo(null);
 
-        for(Tela tela : Tela.values()) {
-            pnlBarraLateral.add(new PnlLinkBarraLateral(tela));
+        for (Tela tela : Tela.values()) {
+            if (!tela.getLabel().equals("")) {
+                pnlBarraLateral.add(new PnlLinkBarraLateral(tela));
+
+            }
         }
     }
-    
+
     public JPanel getPnlConteudo() {
         return pnlConteudo;
     }
@@ -56,7 +57,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ITERUM");
         setMinimumSize(new java.awt.Dimension(1000, 800));
-        setPreferredSize(new java.awt.Dimension(1000, 800));
 
         pnlBarraLateral.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         pnlBarraLateral.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 20, 10));
@@ -94,11 +94,11 @@ public class MainFrame extends javax.swing.JFrame {
             com.formdev.flatlaf.FlatLightLaf.setup();
 
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName())
+            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName())
                     .log(java.util.logging.Level.SEVERE, "Erro ao carregar o tema IFES", ex);
         }
 
-        java.awt.EventQueue.invokeLater(() -> new MainFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new FrmPrincipal().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,6 +4,9 @@
  */
 package iterum.viewer.componentes;
 
+import iterum.controller.GerenciadorInterfaceGrafica;
+import iterum.controller.Tela;
+
 /**
  *
  * @author evandro
@@ -128,7 +131,7 @@ public class PnlCardProjeto extends javax.swing.JPanel {
     }//GEN-LAST:event_formMouseExited
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println("mudar a telaaa");
+        GerenciadorInterfaceGrafica.instancia.abrirTela(Tela.PROJETO);
     }//GEN-LAST:event_formMouseClicked
 
 

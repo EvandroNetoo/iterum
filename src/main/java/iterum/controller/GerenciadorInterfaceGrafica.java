@@ -1,26 +1,25 @@
 package iterum.controller;
 
-import iterum.viewer.MainFrame;
+import iterum.viewer.FrmPrincipal;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 public class GerenciadorInterfaceGrafica {
 
-    MainFrame mainFrame = null;
+    FrmPrincipal mainFrame = null;
     public static final GerenciadorInterfaceGrafica instancia = new GerenciadorInterfaceGrafica();
 
     private GerenciadorInterfaceGrafica() {
-        System.out.println("1");
         try {
             com.formdev.flatlaf.FlatLaf.registerCustomDefaultsSource("iterum");
 
             com.formdev.flatlaf.FlatLightLaf.setup();
 
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName())
+            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName())
                     .log(java.util.logging.Level.SEVERE, "Erro ao carregar o tema IFES", ex);
         }
-        mainFrame = new MainFrame();
+        mainFrame = new FrmPrincipal();
     }
 
     public void abrirMainFrame() {

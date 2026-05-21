@@ -4,22 +4,53 @@
  */
 package iterum.domain;
 
-import java.util.Arrays;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  *
  * @author evandro
  */
+@Entity
+@Table(name = "etapas_projeto")
 public class EtapaProjeto {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
     private boolean etapaDeConclucao;
+
+    @Column(nullable = false, length = 200)
     private String nome;
+
+    @Column(nullable = false, length = 20)
     private String hexColor;
 
-    private List<Tarefa> tarefas;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "projeto_id", nullable = false)
+    private Projeto projeto;
+
+    @OneToMany(mappedBy = "etapa", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "ordem")
+    private List<Tarefa> tarefas = new ArrayList<>();
+
+    protected EtapaProjeto() {
+    }
 
     public EtapaProjeto(int id, String nome, String hexColor, boolean etapaDeConclucao) {
         this.id = id;
@@ -30,17 +61,18 @@ public class EtapaProjeto {
         this.tarefas = new ArrayList<>(Arrays.asList(
                 new Tarefa(1, "Fazer o front"),
                 new Tarefa(2, "Fazer o back")));
+        vincularTarefas();
     }
 
     public EtapaProjeto(String nome, String hexColor, boolean etapaDeConclucao) {
         this(0, nome, hexColor, etapaDeConclucao);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,6 +98,7 @@ public class EtapaProjeto {
 
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
+        vincularTarefas();
     }
 
     public boolean isEtapaDeConclucao() {
@@ -74,6 +107,23 @@ public class EtapaProjeto {
 
     public void setEtapaDeConclucao(boolean etapaDeConclucao) {
         this.etapaDeConclucao = etapaDeConclucao;
+    }
+
+    public Projeto getProjeto() {
+        return projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
+    }
+
+    private void vincularTarefas() {
+        if (tarefas == null) {
+            return;
+        }
+        for (Tarefa tarefa : tarefas) {
+            tarefa.setEtapa(this);
+        }
     }
 
 }

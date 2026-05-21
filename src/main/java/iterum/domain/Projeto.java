@@ -4,20 +4,40 @@
  */
 package iterum.domain;
 
-import java.util.Arrays;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  *
  * @author evandro
  */
+@Entity
+@Table(name = "projetos")
 public class Projeto {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 200)
     private String nome;
 
-    private List<EtapaProjeto> etapas;
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "ordem")
+    private List<EtapaProjeto> etapas = new ArrayList<>();
+
+    protected Projeto() {
+    }
 
     public Projeto(int id, String nome) {
         this.id = id;
@@ -27,17 +47,18 @@ public class Projeto {
                 new EtapaProjeto(2, "EM ANDAMENTO", "#0A84FF", false),
                 new EtapaProjeto(3, "REVISAO", "#FF9F0A", false),
                 new EtapaProjeto(4, "CONCLUIDO", "#30D158", true)));
+        vincularEtapas();
     }
 
     public Projeto(String nome) {
         this(0, nome);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,6 +76,16 @@ public class Projeto {
 
     public void setEtapas(List<EtapaProjeto> etapas) {
         this.etapas = etapas;
+        vincularEtapas();
+    }
+
+    private void vincularEtapas() {
+        if (etapas == null) {
+            return;
+        }
+        for (EtapaProjeto etapa : etapas) {
+            etapa.setProjeto(this);
+        }
     }
 
 }

@@ -4,14 +4,38 @@
  */
 package iterum.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author evandro
  */
+@Entity
+@Table(name = "contribuidores")
 public class Contribuidor {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 200)
     private String nome;
+
+    @Column(nullable = false, length = 200)
     private String email;
+
+    @ManyToMany(mappedBy = "contribuidores")
+    private List<Tarefa> tarefas = new ArrayList<>();
+
+    protected Contribuidor() {
+    }
 
     public Contribuidor(int id, String nome) {
         this(id, nome, "");
@@ -31,11 +55,11 @@ public class Contribuidor {
         this(0, nome, email);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -53,6 +77,14 @@ public class Contribuidor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Tarefa> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(List<Tarefa> tarefas) {
+        this.tarefas = tarefas;
     }
 
 }

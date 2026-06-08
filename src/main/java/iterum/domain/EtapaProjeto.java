@@ -14,10 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,27 +44,17 @@ public class EtapaProjeto {
     @JoinColumn(name = "projeto_id", nullable = false)
     private Projeto projeto;
 
-    @OneToMany(mappedBy = "etapa", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderColumn(name = "ordem")
+    @OneToMany(mappedBy = "etapa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OrderBy("id ASC")
     private List<Tarefa> tarefas = new ArrayList<>();
 
     protected EtapaProjeto() {
     }
 
-    public EtapaProjeto(int id, String nome, String hexColor, boolean etapaDeConclucao) {
-        this.id = id;
+    public EtapaProjeto(String nome, String hexColor, boolean etapaDeConclucao) {
         this.nome = nome;
         this.hexColor = hexColor;
         this.etapaDeConclucao = etapaDeConclucao;
-
-        this.tarefas = new ArrayList<>(Arrays.asList(
-                new Tarefa(1, "Fazer o front"),
-                new Tarefa(2, "Fazer o back")));
-        vincularTarefas();
-    }
-
-    public EtapaProjeto(String nome, String hexColor, boolean etapaDeConclucao) {
-        this(0, nome, hexColor, etapaDeConclucao);
     }
 
     public Integer getId() {

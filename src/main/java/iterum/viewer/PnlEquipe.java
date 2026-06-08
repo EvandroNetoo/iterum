@@ -5,14 +5,15 @@
 package iterum.viewer;
 
 import iterum.controller.GerenciadorInterfaceGrafica;
-import iterum.domain.Contribuidor;
-import javax.swing.table.DefaultTableModel;
+import iterum.controller.TableModelContribuidor;
 
 /**
  *
  * @author evandro
  */
 public class PnlEquipe extends javax.swing.JPanel {
+
+    private TableModelContribuidor tableModelContribuidor;
 
     /**
      * Creates new form PnlEquipe
@@ -25,23 +26,12 @@ public class PnlEquipe extends javax.swing.JPanel {
     }
 
     private void configurarTabela() {
-        jTable1.setModel(new DefaultTableModel(
-                new Object[][] {},
-                new String[] { "Nome", "Email" }) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        });
+        tableModelContribuidor = new TableModelContribuidor();
+        jTable1.setModel(tableModelContribuidor);
     }
 
     public void atualizarTabela() {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-
-        for (Contribuidor contribuidor : GerenciadorInterfaceGrafica.instancia.listarContribuidores()) {
-            model.addRow(new Object[] { contribuidor.getNome(), contribuidor.getEmail() });
-        }
+        tableModelContribuidor.setLista(GerenciadorInterfaceGrafica.instancia.listarContribuidores());
     }
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {

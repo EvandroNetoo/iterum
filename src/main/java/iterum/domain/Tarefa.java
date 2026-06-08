@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,16 +41,6 @@ public class Tarefa {
     private List<Contribuidor> contribuidores = new ArrayList<>();
 
     protected Tarefa() {
-    }
-
-    public Tarefa(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-
-        contribuidores = new ArrayList<>(Arrays.asList(
-                new Contribuidor(1, "Evandro Neto"),
-                new Contribuidor(2, "Gabriel Rocha")));
-        vincularContribuidores();
     }
 
     public Tarefa(String nome) {

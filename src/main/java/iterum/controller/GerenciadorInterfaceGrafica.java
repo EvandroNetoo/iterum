@@ -5,25 +5,27 @@ import iterum.domain.EtapaProjeto;
 import iterum.domain.Projeto;
 import iterum.domain.Tarefa;
 import iterum.viewer.FrmPrincipal;
+import iterum.viewer.PnlEquipe;
+import iterum.viewer.PnlProjeto;
+import iterum.viewer.PnlProjetos;
 import iterum.viewer.dialog.DlgContribuidorCadastro;
 import iterum.viewer.dialog.DlgProjetoCadastro;
 import iterum.viewer.dialog.DlgTarefaCadastro;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Window;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.hibernate.HibernateException;
 
 public class GerenciadorInterfaceGrafica {
 
     FrmPrincipal mainFrame = null;
     public static final GerenciadorInterfaceGrafica instancia = new GerenciadorInterfaceGrafica();
-    private final List<Projeto> projetos = new ArrayList<>();
-    private final List<Contribuidor> contribuidores = new ArrayList<>();
+    private GerenciadorDominio gerenciadorDominio;
     private Projeto projetoSelecionado;
 
     private GerenciadorInterfaceGrafica() {
@@ -37,7 +39,15 @@ public class GerenciadorInterfaceGrafica {
                     .log(java.util.logging.Level.SEVERE, "Erro ao carregar o tema IFES", ex);
         }
 
-        carregarDadosIniciais();
+        try {
+            gerenciadorDominio = new GerenciadorDominio();
+        } catch (HibernateException | ExceptionInInitializerError ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao inicializar a conexão com o banco de dados. " + ex.getMessage(),
+                    "Inicialização",
+                    JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 
     public void abrirMainFrame() {
@@ -68,33 +78,56 @@ public class GerenciadorInterfaceGrafica {
             pnlConteudo.revalidate();
         }
 
+        atualizarTela(novaTela);
+
         CardLayout card = (CardLayout) pnlConteudo.getLayout();
         card.show(pnlConteudo, tela.getNome());
     }
 
+    public GerenciadorDominio getGerenciadorDominio() {
+        return gerenciadorDominio;
+    }
+
+    @SuppressWarnings("unchecked")
     public List<Projeto> listarProjetos() {
-        return Collections.unmodifiableList(projetos);
+        try {
+            return gerenciadorDominio.listar(Projeto.class);
+        } catch (HibernateException ex) {
+            mostrarErro("Erro ao listar projetos.", ex);
+            return List.of();
+        }
     }
 
     public Projeto adicionarProjeto(String nomeProjeto) {
-        Projeto projeto = new Projeto(projetos.size() + 1, nomeProjeto.trim());
-        projetos.add(projeto);
-
-        if (projetoSelecionado == null) {
-            projetoSelecionado = projeto;
+        try {
+            Projeto projeto = gerenciadorDominio.inserirProjeto(nomeProjeto);
+            if (projetoSelecionado == null) {
+                projetoSelecionado = projeto;
+            }
+            return projeto;
+        } catch (HibernateException ex) {
+            mostrarErro("Erro ao inserir projeto.", ex);
+            return null;
         }
-
-        return projeto;
     }
 
+    @SuppressWarnings("unchecked")
     public List<Contribuidor> listarContribuidores() {
-        return Collections.unmodifiableList(contribuidores);
+        try {
+            return gerenciadorDominio.listar(Contribuidor.class);
+        } catch (HibernateException ex) {
+            mostrarErro("Erro ao listar contribuidores.", ex);
+            return List.of();
+        }
     }
 
     public Contribuidor adicionarContribuidor(String nome, String email) {
-        Contribuidor contribuuidor = new Contribuidor(contribuidores.size() + 1, nome.trim(), email.trim());
-        contribuidores.add(contribuuidor);
-        return contribuuidor;
+        try {
+            return gerenciadorDominio.inserirContribuidor(nome, email);
+        } catch (HibernateException ex) {
+            mostrarErro("Erro ao inserir contribuidor.", ex);
+            return null;
+        }
     }
 
     public void selecionarProjeto(Projeto projeto) {
@@ -102,8 +135,11 @@ public class GerenciadorInterfaceGrafica {
     }
 
     public Projeto getProjetoSelecionado() {
-        if (projetoSelecionado == null && !projetos.isEmpty()) {
-            projetoSelecionado = projetos.getFirst();
+        if (projetoSelecionado == null) {
+            List<Projeto> projetos = listarProjetos();
+            if (!projetos.isEmpty()) {
+                projetoSelecionado = projetos.getFirst();
+            }
         }
         return projetoSelecionado;
     }
@@ -117,10 +153,12 @@ public class GerenciadorInterfaceGrafica {
     }
 
     public Tarefa adicionarTarefaNaEtapa(EtapaProjeto etapa, String nomeTarefa) {
-        int novoId = etapa.getTarefas().size() + 1;
-        Tarefa tarefa = new Tarefa(novoId, nomeTarefa.trim());
-        etapa.getTarefas().add(tarefa);
-        return tarefa;
+        try {
+            return gerenciadorDominio.inserirTarefa(etapa, nomeTarefa);
+        } catch (HibernateException ex) {
+            mostrarErro("Erro ao inserir tarefa.", ex);
+            return null;
+        }
     }
 
     public Optional<String> solicitarNomeNovoProjeto(Component componentePai) {
@@ -140,7 +178,7 @@ public class GerenciadorInterfaceGrafica {
         }
 
         Contribuidor contribuidor = adicionarContribuidor(dialog.getNomeInformado(), dialog.getEmailInformado());
-        return Optional.of(contribuidor);
+        return Optional.ofNullable(contribuidor);
     }
 
     public Optional<String> solicitarNovaTarefa(Component componentePai, String nomeEtapa) {
@@ -150,19 +188,20 @@ public class GerenciadorInterfaceGrafica {
         return dialog.getNomeTarefa();
     }
 
-    private void carregarDadosIniciais() {
-        Projeto appMobile = new Projeto(1, "App Mobile");
-        Projeto portalCliente = new Projeto(2, "Portal do Cliente");
-        Projeto biOperacional = new Projeto(3, "BI Operacional");
-
-        projetos.add(appMobile);
-        projetos.add(portalCliente);
-        projetos.add(biOperacional);
-        projetoSelecionado = appMobile;
-
-        contribuidores.add(new Contribuidor(1, "Ana Ribeiro", "ana@ifes.edu.br"));
-        contribuidores.add(new Contribuidor(2, "Mateus Silva", "mateus@ifes.edu.br"));
-        contribuidores.add(new Contribuidor(3, "Livia Souza", "livia@ifes.edu.br"));
+    private void atualizarTela(JPanel painel) {
+        if (painel instanceof PnlProjetos pnlProjetos) {
+            pnlProjetos.atualizarListagem();
+        } else if (painel instanceof PnlEquipe pnlEquipe) {
+            pnlEquipe.atualizarTabela();
+        } else if (painel instanceof PnlProjeto pnlProjeto) {
+            pnlProjeto.atualizarQuadro();
+        }
     }
 
+    private void mostrarErro(String mensagem, Throwable ex) {
+        JOptionPane.showMessageDialog(mainFrame,
+                mensagem + " " + ex.getMessage(),
+                "Banco de dados",
+                JOptionPane.ERROR_MESSAGE);
+    }
 }

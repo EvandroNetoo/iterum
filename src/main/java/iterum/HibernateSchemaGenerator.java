@@ -1,12 +1,13 @@
 package iterum;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import iterum.dao.ConexaoHibernate;
+import org.hibernate.Session;
 
 public class HibernateSchemaGenerator {
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("iterumPU");
-        emf.createEntityManager().close();
-        emf.close();
+        try (Session sessao = ConexaoHibernate.getSessionFactory().openSession()) {
+            System.out.println("Esquema do Iterum validado.");
+        }
+        ConexaoHibernate.getSessionFactory().close();
     }
 }

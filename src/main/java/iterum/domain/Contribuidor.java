@@ -37,22 +37,13 @@ public class Contribuidor {
     protected Contribuidor() {
     }
 
-    public Contribuidor(int id, String nome) {
-        this(id, nome, "");
-    }
-
-    public Contribuidor(int id, String nome, String email) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-    }
-
     public Contribuidor(String nome) {
-        this(0, nome, "");
+        this(nome, "");
     }
 
     public Contribuidor(String nome, String email) {
-        this(0, nome, email);
+        this.nome = nome;
+        this.email = email;
     }
 
     public Integer getId() {

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -32,26 +33,21 @@ public class Projeto {
     @Column(nullable = false, length = 200)
     private String nome;
 
-    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @OrderColumn(name = "ordem")
     private List<EtapaProjeto> etapas = new ArrayList<>();
 
     protected Projeto() {
     }
 
-    public Projeto(int id, String nome) {
-        this.id = id;
+    public Projeto(String nome) {
         this.nome = nome;
         this.etapas = new ArrayList<>(Arrays.asList(
-                new EtapaProjeto(1, "BACKLOG", "#8E8E93", false),
-                new EtapaProjeto(2, "EM ANDAMENTO", "#0A84FF", false),
-                new EtapaProjeto(3, "REVISAO", "#FF9F0A", false),
-                new EtapaProjeto(4, "CONCLUIDO", "#30D158", true)));
+                new EtapaProjeto("BACKLOG", "#8E8E93", false),
+                new EtapaProjeto("EM ANDAMENTO", "#0A84FF", false),
+                new EtapaProjeto("REVISAO", "#FF9F0A", false),
+                new EtapaProjeto("CONCLUIDO", "#30D158", true)));
         vincularEtapas();
-    }
-
-    public Projeto(String nome) {
-        this(0, nome);
     }
 
     public Integer getId() {

@@ -9,10 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -31,7 +35,8 @@ public class Contribuidor {
     @Column(nullable = false, length = 200)
     private String email;
 
-    @ManyToMany(mappedBy = "contribuidores")
+    @ManyToMany(mappedBy = "contribuidores", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Tarefa> tarefas = new ArrayList<>();
 
     protected Contribuidor() {
@@ -76,6 +81,27 @@ public class Contribuidor {
 
     public void setTarefas(List<Tarefa> tarefas) {
         this.tarefas = tarefas;
+    }
+
+    @Override
+    public String toString() {
+        return email == null || email.isBlank() ? nome : nome + " <" + email + ">";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Contribuidor other)) {
+            return false;
+        }
+        return id != null && Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? System.identityHashCode(this) : Objects.hash(id);
     }
 
 }

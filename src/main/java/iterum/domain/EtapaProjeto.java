@@ -18,6 +18,9 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -40,12 +43,13 @@ public class EtapaProjeto {
     @Column(nullable = false, length = 20)
     private String hexColor;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "projeto_id", nullable = false)
     private Projeto projeto;
 
     @OneToMany(mappedBy = "etapa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @OrderBy("id ASC")
+    @Fetch(FetchMode.SUBSELECT)
     private List<Tarefa> tarefas = new ArrayList<>();
 
     protected EtapaProjeto() {
@@ -113,6 +117,27 @@ public class EtapaProjeto {
         for (Tarefa tarefa : tarefas) {
             tarefa.setEtapa(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof EtapaProjeto other)) {
+            return false;
+        }
+        return id != null && Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? System.identityHashCode(this) : Objects.hash(id);
     }
 
 }

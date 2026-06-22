@@ -1,29 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package iterum.viewer;
 
 import iterum.controller.GerenciadorInterfaceGrafica;
+import iterum.domain.Contribuidor;
 import iterum.domain.EtapaProjeto;
 import iterum.domain.Projeto;
 import iterum.domain.Tarefa;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.TransferHandler;
 
-/**
- *
- * @author evandro
- */
 public class PnlProjeto extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PnlProjeto
-     */
+    private final JLabel lblNomeProjeto = new JLabel("-");
+    private final JPanel pnlQuadro = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+
     public PnlProjeto() {
         initComponents();
         atualizarQuadro();
@@ -32,291 +38,198 @@ public class PnlProjeto extends javax.swing.JPanel {
     public final void atualizarQuadro() {
         Projeto projeto = GerenciadorInterfaceGrafica.instancia.getProjetoSelecionado();
         lblNomeProjeto.setText(projeto == null ? "Selecione um projeto" : projeto.getNome());
+        pnlQuadro.removeAll();
 
-        List<EtapaProjeto> etapas = GerenciadorInterfaceGrafica.instancia.listarEtapasProjetoSelecionado();
-        popularColuna(etapas, 0, lblTituloBacklog, pnlListaBacklog);
-        popularColuna(etapas, 1, lblTituloAndamento, pnlListaAndamento);
-        popularColuna(etapas, 2, lblTituloRevisao, pnlListaRevisao);
-        popularColuna(etapas, 3, lblTituloConcluido, pnlListaConcluido);
+        if (projeto != null) {
+            for (EtapaProjeto etapa : GerenciadorInterfaceGrafica.instancia.listarEtapasProjetoSelecionado()) {
+                pnlQuadro.add(criarColuna(etapa));
+            }
+        }
+
+        pnlQuadro.revalidate();
+        pnlQuadro.repaint();
     }
 
-    private void popularColuna(List<EtapaProjeto> etapas, int indice, JLabel lblEtapa, JPanel pnlLista) {
-        pnlLista.removeAll();
+    private JPanel criarColuna(EtapaProjeto etapa) {
+        JPanel coluna = new JPanel(new BorderLayout());
+        coluna.setPreferredSize(new Dimension(260, 520));
+        coluna.setBorder(BorderFactory.createLineBorder(javax.swing.UIManager.getColor("Button.borderColor")));
 
-        if (indice >= etapas.size()) {
-            lblEtapa.setText("ETAPA");
-            pnlLista.revalidate();
-            pnlLista.repaint();
-            return;
-        }
+        JPanel cabecalho = new JPanel(new BorderLayout(8, 0));
+        cabecalho.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-        EtapaProjeto etapa = etapas.get(indice);
-        lblEtapa.setText(etapa.getNome());
+        JLabel titulo = new JLabel(etapa.getNome());
+        titulo.setFont(new java.awt.Font("Liberation Sans", java.awt.Font.BOLD, 15));
+        JButton adicionar = new JButton("+ Tarefa");
+        adicionar.addActionListener(evt -> adicionarTarefa(etapa));
+        cabecalho.add(titulo, BorderLayout.CENTER);
+        cabecalho.add(adicionar, BorderLayout.EAST);
+        coluna.add(cabecalho, BorderLayout.NORTH);
+
+        JPanel lista = new JPanel();
+        lista.setLayout(new BoxLayout(lista, BoxLayout.Y_AXIS));
+        lista.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
+        lista.setTransferHandler(new EtapaTransferHandler(etapa));
 
         for (Tarefa tarefa : etapa.getTarefas()) {
-            pnlLista.add(criarCardTarefa(tarefa));
+            lista.add(criarCardTarefa(tarefa));
         }
 
-        pnlLista.revalidate();
-        pnlLista.repaint();
+        JScrollPane scrollPane = new JScrollPane(lista);
+        scrollPane.setBorder(null);
+        coluna.add(scrollPane, BorderLayout.CENTER);
+        return coluna;
     }
 
     private JPanel criarCardTarefa(Tarefa tarefa) {
-        JPanel card = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
-        card.setOpaque(true);
+        JPanel card = new JPanel(new BorderLayout(8, 6));
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 110));
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(javax.swing.UIManager.getColor("Button.borderColor")),
+                BorderFactory.createEmptyBorder(8, 8, 8, 8)));
         card.setBackground(Color.WHITE);
-        card.setBorder(
-                BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor")));
+        card.setOpaque(true);
+        card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        card.setTransferHandler(new TarefaTransferHandler(tarefa));
 
-        JLabel lblNome = new JLabel(tarefa.getNome());
-        card.add(lblNome);
+        JLabel nome = new JLabel(tarefa.getNome());
+        nome.setFont(new java.awt.Font("Liberation Sans", java.awt.Font.BOLD, 14));
+        card.add(nome, BorderLayout.NORTH);
+
+        String colaboradores = tarefa.getContribuidores().isEmpty()
+                ? "Sem colaboradores"
+                : tarefa.getContribuidores().stream().map(Contribuidor::getNome).collect(Collectors.joining(", "));
+        card.add(new JLabel(colaboradores), BorderLayout.CENTER);
+
+        JPanel acoes = new JPanel(new GridLayout(1, 2, 6, 0));
+        JButton editar = new JButton("Editar");
+        JButton excluir = new JButton("Excluir");
+        editar.addActionListener(evt -> editarTarefa(tarefa));
+        excluir.addActionListener(evt -> excluirTarefa(tarefa));
+        acoes.add(editar);
+        acoes.add(excluir);
+        card.add(acoes, BorderLayout.SOUTH);
+
+        card.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                card.getTransferHandler().exportAsDrag(card, evt, TransferHandler.MOVE);
+            }
+        });
+
         return card;
     }
 
-    private EtapaProjeto getEtapaPorIndice(int indice) {
-        List<EtapaProjeto> etapas = GerenciadorInterfaceGrafica.instancia.listarEtapasProjetoSelecionado();
-        if (indice < 0 || indice >= etapas.size()) {
-            return null;
-        }
-        return etapas.get(indice);
-    }
-
-    private void abrirDialogAdicionarTarefa(EtapaProjeto etapa) {
-        if (etapa == null) {
-            return;
-        }
-
-        GerenciadorInterfaceGrafica.instancia.solicitarNovaTarefa(this, etapa.getNome())
-                .ifPresent(nomeTarefa -> {
-                    GerenciadorInterfaceGrafica.instancia.adicionarTarefaNaEtapa(etapa, nomeTarefa);
+    private void adicionarTarefa(EtapaProjeto etapa) {
+        GerenciadorInterfaceGrafica.instancia.solicitarNovaTarefaCompleta(this, etapa.getNome())
+                .ifPresent(dados -> {
+                    GerenciadorInterfaceGrafica.instancia.adicionarTarefaNaEtapa(etapa, dados.nome(), dados.contribuidores());
                     atualizarQuadro();
                 });
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    private void editarTarefa(Tarefa tarefa) {
+        GerenciadorInterfaceGrafica.instancia.solicitarEdicaoTarefa(this, tarefa)
+                .ifPresent(dados -> {
+                    GerenciadorInterfaceGrafica.instancia.alterarTarefa(tarefa, dados.nome(), dados.contribuidores());
+                    atualizarQuadro();
+                });
+    }
+
+    private void excluirTarefa(Tarefa tarefa) {
+        int opcao = JOptionPane.showConfirmDialog(
+                this,
+                "Excluir a tarefa \"" + tarefa.getNome() + "\"?",
+                "Excluir tarefa",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (opcao == JOptionPane.YES_OPTION && GerenciadorInterfaceGrafica.instancia.excluirTarefa(tarefa)) {
+            atualizarQuadro();
+        }
+    }
+
+    private Tarefa encontrarTarefa(Integer tarefaId) {
+        for (EtapaProjeto etapa : GerenciadorInterfaceGrafica.instancia.listarEtapasProjetoSelecionado()) {
+            for (Tarefa tarefa : etapa.getTarefas()) {
+                if (tarefa.getId().equals(tarefaId)) {
+                    return tarefa;
+                }
+            }
+        }
+        return null;
+    }
+
     private void initComponents() {
+        setLayout(new BorderLayout(10, 10));
 
-        pnlTopo = new javax.swing.JPanel();
-        pnlCabecalho = new javax.swing.JPanel();
-        lblTitulo = new javax.swing.JLabel();
-        lblNomeProjeto = new javax.swing.JLabel();
-        jScrollPaneQuadro = new javax.swing.JScrollPane();
-        pnlQuadro = new javax.swing.JPanel();
-        pnlColunaBacklog = new javax.swing.JPanel();
-        pnlHeaderBacklog = new javax.swing.JPanel();
-        lblTituloBacklog = new javax.swing.JLabel();
-        btnAdicionarBacklog = new javax.swing.JButton();
-        jScrollPaneBacklog = new javax.swing.JScrollPane();
-        pnlListaBacklog = new javax.swing.JPanel();
-        pnlColunaAndamento = new javax.swing.JPanel();
-        pnlHeaderAndamento = new javax.swing.JPanel();
-        lblTituloAndamento = new javax.swing.JLabel();
-        btnAdicionarAndamento = new javax.swing.JButton();
-        jScrollPaneAndamento = new javax.swing.JScrollPane();
-        pnlListaAndamento = new javax.swing.JPanel();
-        pnlColunaRevisao = new javax.swing.JPanel();
-        pnlHeaderRevisao = new javax.swing.JPanel();
-        lblTituloRevisao = new javax.swing.JLabel();
-        btnAdicionarRevisao = new javax.swing.JButton();
-        jScrollPaneRevisao = new javax.swing.JScrollPane();
-        pnlListaRevisao = new javax.swing.JPanel();
-        pnlColunaConcluido = new javax.swing.JPanel();
-        pnlHeaderConcluido = new javax.swing.JPanel();
-        lblTituloConcluido = new javax.swing.JLabel();
-        btnAdicionarConcluido = new javax.swing.JButton();
-        jScrollPaneConcluido = new javax.swing.JScrollPane();
-        pnlListaConcluido = new javax.swing.JPanel();
+        JPanel topo = new JPanel();
+        topo.setLayout(new BoxLayout(topo, BoxLayout.Y_AXIS));
+        JLabel titulo = new JLabel("PROJETO");
+        titulo.setFont(new java.awt.Font("Liberation Sans", java.awt.Font.BOLD, 42));
+        titulo.setAlignmentX(0.5f);
+        lblNomeProjeto.setAlignmentX(0.5f);
+        topo.add(titulo);
+        topo.add(lblNomeProjeto);
+        add(topo, BorderLayout.NORTH);
 
-        setLayout(new java.awt.BorderLayout());
+        pnlQuadro.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
+        JScrollPane scrollPane = new JScrollPane(pnlQuadro);
+        scrollPane.setBorder(null);
+        add(scrollPane, BorderLayout.CENTER);
+    }
 
-        pnlCabecalho.setLayout(new javax.swing.BoxLayout(pnlCabecalho, javax.swing.BoxLayout.Y_AXIS));
+    private class TarefaTransferHandler extends TransferHandler {
+        private final Tarefa tarefa;
 
-        lblTitulo.setFont(new java.awt.Font("Liberation Sans", 1, 42)); // NOI18N
-        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("PROJETO");
-        lblTitulo.setAlignmentX(0.5F);
-        pnlCabecalho.add(lblTitulo);
+        TarefaTransferHandler(Tarefa tarefa) {
+            this.tarefa = tarefa;
+        }
 
-        lblNomeProjeto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNomeProjeto.setText("-");
-        lblNomeProjeto.setAlignmentX(0.5F);
-        pnlCabecalho.add(lblNomeProjeto);
+        @Override
+        protected Transferable createTransferable(javax.swing.JComponent c) {
+            return new StringSelection(String.valueOf(tarefa.getId()));
+        }
 
-        pnlTopo.add(pnlCabecalho);
+        @Override
+        public int getSourceActions(javax.swing.JComponent c) {
+            return MOVE;
+        }
+    }
 
-        add(pnlTopo, java.awt.BorderLayout.NORTH);
+    private class EtapaTransferHandler extends TransferHandler {
+        private final EtapaProjeto etapaDestino;
 
-        jScrollPaneQuadro.setBorder(null);
+        EtapaTransferHandler(EtapaProjeto etapaDestino) {
+            this.etapaDestino = etapaDestino;
+        }
 
-        pnlQuadro.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 12));
-        pnlQuadro.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        @Override
+        public boolean canImport(TransferSupport support) {
+            return support.isDataFlavorSupported(DataFlavor.stringFlavor);
+        }
 
-        pnlColunaBacklog.setBorder(javax.swing.BorderFactory
-                .createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor")));
-        pnlColunaBacklog.setPreferredSize(new java.awt.Dimension(240, 460));
-        pnlColunaBacklog.setLayout(new java.awt.BorderLayout());
+        @Override
+        public boolean importData(TransferSupport support) {
+            if (!canImport(support)) {
+                return false;
+            }
 
-        pnlHeaderBacklog.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        pnlHeaderBacklog.setLayout(new java.awt.BorderLayout(8, 0));
-
-        lblTituloBacklog.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblTituloBacklog.setText("BACKLOG");
-        pnlHeaderBacklog.add(lblTituloBacklog);
-
-        btnAdicionarBacklog.setText("+ Tarefa");
-        btnAdicionarBacklog.addActionListener(this::btnAdicionarBacklogActionPerformed);
-        pnlHeaderBacklog.add(btnAdicionarBacklog, java.awt.BorderLayout.EAST);
-
-        pnlColunaBacklog.add(pnlHeaderBacklog, java.awt.BorderLayout.NORTH);
-
-        jScrollPaneBacklog.setBorder(null);
-
-        pnlListaBacklog.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4));
-        pnlListaBacklog.setLayout(new javax.swing.BoxLayout(pnlListaBacklog, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPaneBacklog.setViewportView(pnlListaBacklog);
-
-        pnlColunaBacklog.add(jScrollPaneBacklog, java.awt.BorderLayout.CENTER);
-
-        pnlQuadro.add(pnlColunaBacklog);
-
-        pnlColunaAndamento.setBorder(javax.swing.BorderFactory
-                .createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor")));
-        pnlColunaAndamento.setPreferredSize(new java.awt.Dimension(240, 460));
-        pnlColunaAndamento.setLayout(new java.awt.BorderLayout());
-
-        pnlHeaderAndamento.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        pnlHeaderAndamento.setLayout(new java.awt.BorderLayout(8, 0));
-
-        lblTituloAndamento.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblTituloAndamento.setText("EM ANDAMENTO");
-        pnlHeaderAndamento.add(lblTituloAndamento);
-
-        btnAdicionarAndamento.setText("+ Tarefa");
-        btnAdicionarAndamento.addActionListener(this::btnAdicionarAndamentoActionPerformed);
-        pnlHeaderAndamento.add(btnAdicionarAndamento, java.awt.BorderLayout.EAST);
-
-        pnlColunaAndamento.add(pnlHeaderAndamento, java.awt.BorderLayout.NORTH);
-
-        jScrollPaneAndamento.setBorder(null);
-
-        pnlListaAndamento.setLayout(new javax.swing.BoxLayout(pnlListaAndamento, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPaneAndamento.setViewportView(pnlListaAndamento);
-
-        pnlColunaAndamento.add(jScrollPaneAndamento, java.awt.BorderLayout.CENTER);
-
-        pnlQuadro.add(pnlColunaAndamento);
-
-        pnlColunaRevisao.setBorder(javax.swing.BorderFactory
-                .createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor")));
-        pnlColunaRevisao.setPreferredSize(new java.awt.Dimension(240, 460));
-        pnlColunaRevisao.setLayout(new java.awt.BorderLayout());
-
-        pnlHeaderRevisao.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        pnlHeaderRevisao.setLayout(new java.awt.BorderLayout(8, 0));
-
-        lblTituloRevisao.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblTituloRevisao.setText("REVISAO");
-        pnlHeaderRevisao.add(lblTituloRevisao);
-
-        btnAdicionarRevisao.setText("+ Tarefa");
-        btnAdicionarRevisao.addActionListener(this::btnAdicionarRevisaoActionPerformed);
-        pnlHeaderRevisao.add(btnAdicionarRevisao, java.awt.BorderLayout.EAST);
-
-        pnlColunaRevisao.add(pnlHeaderRevisao, java.awt.BorderLayout.NORTH);
-
-        jScrollPaneRevisao.setBorder(null);
-
-        pnlListaRevisao.setLayout(new javax.swing.BoxLayout(pnlListaRevisao, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPaneRevisao.setViewportView(pnlListaRevisao);
-
-        pnlColunaRevisao.add(jScrollPaneRevisao, java.awt.BorderLayout.CENTER);
-
-        pnlQuadro.add(pnlColunaRevisao);
-
-        pnlColunaConcluido.setBorder(javax.swing.BorderFactory
-                .createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.borderColor")));
-        pnlColunaConcluido.setPreferredSize(new java.awt.Dimension(240, 460));
-        pnlColunaConcluido.setLayout(new java.awt.BorderLayout());
-
-        pnlHeaderConcluido.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        pnlHeaderConcluido.setLayout(new java.awt.BorderLayout(8, 0));
-
-        lblTituloConcluido.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        lblTituloConcluido.setText("CONCLUIDO");
-        pnlHeaderConcluido.add(lblTituloConcluido);
-
-        btnAdicionarConcluido.setText("+ Tarefa");
-        btnAdicionarConcluido.addActionListener(this::btnAdicionarConcluidoActionPerformed);
-        pnlHeaderConcluido.add(btnAdicionarConcluido, java.awt.BorderLayout.EAST);
-
-        pnlColunaConcluido.add(pnlHeaderConcluido, java.awt.BorderLayout.NORTH);
-
-        jScrollPaneConcluido.setBorder(null);
-
-        pnlListaConcluido.setLayout(new javax.swing.BoxLayout(pnlListaConcluido, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPaneConcluido.setViewportView(pnlListaConcluido);
-
-        pnlColunaConcluido.add(jScrollPaneConcluido, java.awt.BorderLayout.CENTER);
-
-        pnlQuadro.add(pnlColunaConcluido);
-
-        jScrollPaneQuadro.setViewportView(pnlQuadro);
-
-        add(jScrollPaneQuadro, java.awt.BorderLayout.CENTER);
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAdicionarBacklogActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdicionarBacklogActionPerformed
-        abrirDialogAdicionarTarefa(getEtapaPorIndice(0));
-    }// GEN-LAST:event_btnAdicionarBacklogActionPerformed
-
-    private void btnAdicionarAndamentoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdicionarAndamentoActionPerformed
-        abrirDialogAdicionarTarefa(getEtapaPorIndice(1));
-    }// GEN-LAST:event_btnAdicionarAndamentoActionPerformed
-
-    private void btnAdicionarRevisaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdicionarRevisaoActionPerformed
-        abrirDialogAdicionarTarefa(getEtapaPorIndice(2));
-    }// GEN-LAST:event_btnAdicionarRevisaoActionPerformed
-
-    private void btnAdicionarConcluidoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdicionarConcluidoActionPerformed
-        abrirDialogAdicionarTarefa(getEtapaPorIndice(3));
-    }// GEN-LAST:event_btnAdicionarConcluidoActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdicionarAndamento;
-    private javax.swing.JButton btnAdicionarBacklog;
-    private javax.swing.JButton btnAdicionarConcluido;
-    private javax.swing.JButton btnAdicionarRevisao;
-    private javax.swing.JScrollPane jScrollPaneAndamento;
-    private javax.swing.JScrollPane jScrollPaneBacklog;
-    private javax.swing.JScrollPane jScrollPaneConcluido;
-    private javax.swing.JScrollPane jScrollPaneQuadro;
-    private javax.swing.JScrollPane jScrollPaneRevisao;
-    private javax.swing.JLabel lblNomeProjeto;
-    private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblTituloAndamento;
-    private javax.swing.JLabel lblTituloBacklog;
-    private javax.swing.JLabel lblTituloConcluido;
-    private javax.swing.JLabel lblTituloRevisao;
-    private javax.swing.JPanel pnlCabecalho;
-    private javax.swing.JPanel pnlColunaAndamento;
-    private javax.swing.JPanel pnlColunaBacklog;
-    private javax.swing.JPanel pnlColunaConcluido;
-    private javax.swing.JPanel pnlColunaRevisao;
-    private javax.swing.JPanel pnlHeaderAndamento;
-    private javax.swing.JPanel pnlHeaderBacklog;
-    private javax.swing.JPanel pnlHeaderConcluido;
-    private javax.swing.JPanel pnlHeaderRevisao;
-    private javax.swing.JPanel pnlListaAndamento;
-    private javax.swing.JPanel pnlListaBacklog;
-    private javax.swing.JPanel pnlListaConcluido;
-    private javax.swing.JPanel pnlListaRevisao;
-    private javax.swing.JPanel pnlQuadro;
-    private javax.swing.JPanel pnlTopo;
-    // End of variables declaration//GEN-END:variables
+            try {
+                String valor = (String) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+                Tarefa tarefa = encontrarTarefa(Integer.valueOf(valor));
+                if (tarefa == null || tarefa.getEtapa().equals(etapaDestino)) {
+                    return false;
+                }
+                boolean movida = GerenciadorInterfaceGrafica.instancia.moverTarefa(tarefa, etapaDestino);
+                atualizarQuadro();
+                return movida;
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(PnlProjeto.this, "Nao foi possivel mover a tarefa.", "Projeto",
+                        JOptionPane.ERROR_MESSAGE);
+                atualizarQuadro();
+                return false;
+            }
+        }
+    }
 }

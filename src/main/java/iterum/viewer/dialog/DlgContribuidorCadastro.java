@@ -4,6 +4,7 @@
  */
 package iterum.viewer.dialog;
 
+import iterum.domain.Contribuidor;
 import java.awt.Window;
 import javax.swing.JOptionPane;
 
@@ -23,6 +24,16 @@ public class DlgContribuidorCadastro extends javax.swing.JDialog {
         initComponents();
         setModal(modal);
         setLocationRelativeTo(parent);
+    }
+
+    public DlgContribuidorCadastro(Window parent, boolean modal, Contribuidor contribuidor) {
+        this(parent, modal);
+        setTitle("Editar Membro da Equipe");
+        if (contribuidor != null) {
+            txtNome.setText(contribuidor.getNome());
+            txtEmail.setText(contribuidor.getEmail());
+            txtNome.selectAll();
+        }
     }
 
     public boolean isConfirmado() {

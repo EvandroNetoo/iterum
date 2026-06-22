@@ -4,6 +4,7 @@
  */
 package iterum.viewer.dialog;
 
+import iterum.domain.Projeto;
 import java.awt.Window;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -24,6 +25,15 @@ public class DlgProjetoCadastro extends javax.swing.JDialog {
         initComponents();
         setModal(modal);
         setLocationRelativeTo(parent);
+    }
+
+    public DlgProjetoCadastro(Window parent, boolean modal, Projeto projeto) {
+        this(parent, modal);
+        setTitle("Editar Projeto");
+        if (projeto != null) {
+            txtNome.setText(projeto.getNome());
+            txtNome.selectAll();
+        }
     }
 
     public Optional<String> getNomeProjeto() {

@@ -4,9 +4,20 @@
  */
 package iterum.viewer.dialog;
 
+import iterum.domain.Contribuidor;
+import iterum.domain.Tarefa;
 import java.awt.Window;
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -15,6 +26,7 @@ import javax.swing.JOptionPane;
 public class DlgTarefaCadastro extends javax.swing.JDialog {
 
     private boolean confirmado;
+    private JList<Contribuidor> lstContribuidores;
 
     /**
      * Creates new form DlgTarefaCadastro
@@ -27,11 +39,69 @@ public class DlgTarefaCadastro extends javax.swing.JDialog {
         setLocationRelativeTo(parent);
     }
 
+    public DlgTarefaCadastro(Window parent, boolean modal, String etapa, List<Contribuidor> contribuidores) {
+        this(parent, modal, etapa, null, contribuidores);
+    }
+
+    public DlgTarefaCadastro(Window parent, boolean modal, String etapa, Tarefa tarefa, List<Contribuidor> contribuidores) {
+        super(parent);
+        initComponents();
+        setModal(modal);
+        lblEtapaValor.setText(etapa);
+        configurarListaContribuidores(contribuidores, tarefa);
+        if (tarefa != null) {
+            setTitle("Editar Tarefa");
+            txtNome.setText(tarefa.getNome());
+            txtNome.selectAll();
+        }
+        setLocationRelativeTo(parent);
+    }
+
     public Optional<String> getNomeTarefa() {
         if (!confirmado) {
             return Optional.empty();
         }
         return Optional.of(txtNome.getText().trim());
+    }
+
+    public List<Contribuidor> getContribuidoresSelecionados() {
+        if (!confirmado || lstContribuidores == null) {
+            return List.of();
+        }
+        return new ArrayList<>(lstContribuidores.getSelectedValuesList());
+    }
+
+    private void configurarListaContribuidores(List<Contribuidor> contribuidores, Tarefa tarefa) {
+        pnlFormulario.setLayout(new java.awt.GridLayout(5, 1, 0, 8));
+
+        JLabel lblContribuidores = new JLabel("Colaboradores");
+        DefaultListModel<Contribuidor> model = new DefaultListModel<>();
+        if (contribuidores != null) {
+            for (Contribuidor contribuidor : contribuidores) {
+                model.addElement(contribuidor);
+            }
+        }
+
+        lstContribuidores = new JList<>(model);
+        lstContribuidores.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        if (tarefa != null && tarefa.getContribuidores() != null) {
+            Set<Integer> idsSelecionados = tarefa.getContribuidores().stream()
+                    .map(Contribuidor::getId)
+                    .collect(Collectors.toSet());
+            for (int i = 0; i < model.size(); i++) {
+                Contribuidor contribuidor = model.getElementAt(i);
+                if (idsSelecionados.contains(contribuidor.getId())) {
+                    lstContribuidores.addSelectionInterval(i, i);
+                }
+            }
+        }
+
+        JScrollPane scrollPane = new JScrollPane(lstContribuidores);
+        pnlFormulario.add(lblContribuidores);
+        pnlFormulario.add(scrollPane);
+        setMinimumSize(new java.awt.Dimension(500, 360));
+        pack();
     }
 
     /**

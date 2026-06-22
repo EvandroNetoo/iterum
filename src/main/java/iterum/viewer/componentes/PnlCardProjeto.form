@@ -65,7 +65,7 @@
               <Font name="Liberation Sans" size="24" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Sistema ERP"/>
+            <Property name="text" type="java.lang.String" value="-"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -95,19 +95,19 @@
         <Component class="javax.swing.JLabel" name="lblTarefas">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value=" 24 tarefas &#x2022; 15 conclu&#xed;das"/>
+            <Property name="text" type="java.lang.String" value="0 tarefas"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblPrazo">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value=" Prazo: 12 Julho"/>
+            <Property name="text" type="java.lang.String" value="0 etapas"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMembros">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="3 membros"/>
+            <Property name="text" type="java.lang.String" value="0 colaboradores"/>
           </Properties>
         </Component>
       </SubComponents>

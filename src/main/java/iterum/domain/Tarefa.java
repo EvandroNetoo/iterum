@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -32,12 +35,13 @@ public class Tarefa {
     @Column(nullable = false, length = 200)
     private String nome;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "etapa_id", nullable = false)
     private EtapaProjeto etapa;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tarefa_contribuidor", joinColumns = @JoinColumn(name = "tarefa_id"), inverseJoinColumns = @JoinColumn(name = "contribuidor_id"))
+    @Fetch(FetchMode.SUBSELECT)
     private List<Contribuidor> contribuidores = new ArrayList<>();
 
     protected Tarefa() {
@@ -81,9 +85,23 @@ public class Tarefa {
     }
 
     public void addContribuidor(Contribuidor contribuidor) {
-        if (!contribuidores.contains(contribuidor)) {
+        if (contribuidor != null && !contribuidores.contains(contribuidor)) {
             contribuidores.add(contribuidor);
             contribuidor.getTarefas().add(this);
+        }
+    }
+
+    public void removerContribuidor(Contribuidor contribuidor) {
+        if (contribuidor == null) {
+            return;
+        }
+        contribuidores.remove(contribuidor);
+        contribuidor.getTarefas().remove(this);
+    }
+
+    public void limparContribuidores() {
+        for (Contribuidor contribuidor : new ArrayList<>(contribuidores)) {
+            removerContribuidor(contribuidor);
         }
     }
 
@@ -96,6 +114,22 @@ public class Tarefa {
                 contribuidor.getTarefas().add(this);
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Tarefa other)) {
+            return false;
+        }
+        return id != null && Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? System.identityHashCode(this) : Objects.hash(id);
     }
 
 }

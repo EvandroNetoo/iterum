@@ -6,6 +6,10 @@ package iterum.viewer.dialog;
 
 import iterum.domain.Contribuidor;
 import iterum.domain.Tarefa;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -72,8 +76,6 @@ public class DlgTarefaCadastro extends javax.swing.JDialog {
     }
 
     private void configurarListaContribuidores(List<Contribuidor> contribuidores, Tarefa tarefa) {
-        pnlFormulario.setLayout(new java.awt.GridLayout(5, 1, 0, 8));
-
         JLabel lblContribuidores = new JLabel("Colaboradores");
         DefaultListModel<Contribuidor> model = new DefaultListModel<>();
         if (contribuidores != null) {
@@ -98,9 +100,42 @@ public class DlgTarefaCadastro extends javax.swing.JDialog {
         }
 
         JScrollPane scrollPane = new JScrollPane(lstContribuidores);
-        pnlFormulario.add(lblContribuidores);
-        pnlFormulario.add(scrollPane);
+        scrollPane.setPreferredSize(new java.awt.Dimension(440, 120));
+
+        pnlFormulario.removeAll();
+        pnlFormulario.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 8, 0);
+        pnlFormulario.add(pnlEtapa, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 4, 0);
+        pnlFormulario.add(lblNome, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        pnlFormulario.add(txtNome, gbc);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 4, 0);
+        pnlFormulario.add(lblContribuidores, gbc);
+
+        gbc.gridy++;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        pnlFormulario.add(scrollPane, gbc);
+
         setMinimumSize(new java.awt.Dimension(500, 360));
+        getContentPane().add(pnlFormulario, BorderLayout.CENTER);
+        pnlFormulario.revalidate();
+        pnlFormulario.repaint();
         pack();
     }
 

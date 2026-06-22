@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.TransferHandler;
 
 public class PnlProjeto extends javax.swing.JPanel {
@@ -83,7 +84,8 @@ public class PnlProjeto extends javax.swing.JPanel {
 
     private JPanel criarCardTarefa(Tarefa tarefa) {
         JPanel card = new JPanel(new BorderLayout(8, 6));
-        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 110));
+        card.setPreferredSize(new Dimension(230, 132));
+        card.setMaximumSize(new Dimension(230, 132));
         card.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(javax.swing.UIManager.getColor("Button.borderColor")),
                 BorderFactory.createEmptyBorder(8, 8, 8, 8)));
@@ -92,14 +94,13 @@ public class PnlProjeto extends javax.swing.JPanel {
         card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         card.setTransferHandler(new TarefaTransferHandler(tarefa));
 
-        JLabel nome = new JLabel(tarefa.getNome());
-        nome.setFont(new java.awt.Font("Liberation Sans", java.awt.Font.BOLD, 14));
+        JTextArea nome = criarTextoCard(tarefa.getNome(), java.awt.Font.BOLD, 2);
         card.add(nome, BorderLayout.NORTH);
 
         String colaboradores = tarefa.getContribuidores().isEmpty()
                 ? "Sem colaboradores"
                 : tarefa.getContribuidores().stream().map(Contribuidor::getNome).collect(Collectors.joining(", "));
-        card.add(new JLabel(colaboradores), BorderLayout.CENTER);
+        card.add(criarTextoCard(colaboradores, java.awt.Font.PLAIN, 2), BorderLayout.CENTER);
 
         JPanel acoes = new JPanel(new GridLayout(1, 2, 6, 0));
         JButton editar = new JButton("Editar");
@@ -118,6 +119,22 @@ public class PnlProjeto extends javax.swing.JPanel {
         });
 
         return card;
+    }
+
+    private JTextArea criarTextoCard(String texto, int estiloFonte, int linhas) {
+        JTextArea area = new JTextArea(texto == null ? "" : texto);
+        area.setToolTipText(texto);
+        area.setFont(new java.awt.Font("Liberation Sans", estiloFonte, 14));
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
+        area.setEditable(false);
+        area.setFocusable(false);
+        area.setOpaque(false);
+        area.setBorder(null);
+        area.setRows(linhas);
+        area.setMinimumSize(new Dimension(0, area.getPreferredSize().height));
+        area.setPreferredSize(new Dimension(210, area.getPreferredSize().height));
+        return area;
     }
 
     private void adicionarTarefa(EtapaProjeto etapa) {
